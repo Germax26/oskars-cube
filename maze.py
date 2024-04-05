@@ -15,7 +15,7 @@ planes: dict[str, list[str]] = {}
 for plane in ["xy", "xz", "yz"]:
 	with open(f"planes/{plane}.txt", "r") as f:
 		# the first in the pair is the rows, and the second in the pair is the column.
-  		# i.e., for "xy", x is going down and y is going left.
+  		# i.e., for "xy", x is going down and y is going right.
 		planes[plane] = (f.read().split('\n'))
 	
 @functools.cache

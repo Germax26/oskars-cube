@@ -35,6 +35,9 @@ end = (3, 7, 3)
 
 file_name = "graph"
 
+def node_name(x: int, y: int, z: int) -> str:
+	return f'"{x},{y},{z}"'
+
 with open(f"{file_name}.dot", "w") as f:
 	f.write("digraph {\n")
 	f.write(f'\tlayout=neato;\n')
@@ -42,12 +45,12 @@ with open(f"{file_name}.dot", "w") as f:
 		for j in range(Y):
 			for k in range(Z):
 				if not is_valid(i, j, k): continue
-				if (i, j, k) == start: f.write(f'\t"{i},{j},{k}" [label=start, color=red]\n')
-				if (i, j, k) == end: f.write(f'\t"{i},{j},{k}" [label=end, color=green]\n')
+				if (i, j, k) == start: f.write(f'\t{node_name(i,j,k)} [label=start, color=red]\n')
+				if (i, j, k) == end: f.write(f'\t{node_name(i,j,k)} [label=end, color=green]\n')
 				for new in [(i+1,j,k), (i-1,j,k), (i,j+1,k), (i,j-1,k), (i,j,k+1), (i,j,k-1)]: # TODO: Make this better
 					ni, nj, nk = new
-					if is_valid(ni, nj, nk): f.write(f'\t"{i},{j},{k}" -> "{ni},{nj},{nk}"\n')
+					if is_valid(ni, nj, nk): f.write(f'\t{node_name(i,j,k)} -> {node_name(ni,nj,nk)}\n')
 
 	f.write("}\n")
 
-system("dot -Tsvg "+file_name+".dot > "+file_name+".svg &")
+system(f"dot -Tsvg {file_name}.dot > {file_name}.svg &")
